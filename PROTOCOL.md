@@ -1,6 +1,6 @@
-#cache.lot
+# cache.lot
 
-##set
+## set
 To set the parameter, use the design
 ```
 byte set key=value
@@ -18,7 +18,7 @@ Requst
 OK!
 ```
 
-##get
+## get
 To get the parameter, use the desing
 ```
 byte get key
@@ -38,7 +38,7 @@ Requst
 First - The length
 Second - value
 
-##show
+## show
 To receive all registered keys
 example
 ```
