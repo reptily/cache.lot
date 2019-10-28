@@ -40,6 +40,10 @@ Second - value
 
 ## show
 To receive all registered keys
+```
+byte show
+```
+
 example
 ```
 5 show
@@ -51,3 +55,32 @@ Request
 ```
 First - the length
 Second - all keys separated by commas
+
+## del
+delete by change
+```
+byte del value
+```
+First - the length of the entire line
+Second - after a space command del
+Third - and through the following space a key
+
+example
+```
+9 del foo
+```
+
+## die
+delete timer
+```
+byte die value=time
+```
+First - the length of the entire line
+Second - after a space command die
+Third - and through the following space a key
+Four - time in seconds to the end of a variable's life
+
+example
+```
+13 die foo=30
+```

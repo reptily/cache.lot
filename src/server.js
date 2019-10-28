@@ -96,13 +96,19 @@ class ServerCache
         if (val.length > 0){
             switch (val[1]){
                 case 'set':
-                    this.Set(val,d=>call(d));
+                    this.Set(val, d=>call(d));
                     break;
                 case 'get':
-                    this.Get(val,d=>call(d));
+                    this.Get(val, d=>call(d));
                     break;
                 case 'show':
                     this.Show(d=>call(d));
+                    break;
+                case 'die':
+                    this.Die(val, d=>call(d));
+                    break;
+                case 'del':
+                    this.Del(val, d=>call(d));
                     break;
                 default:
                     call('Command not found');
@@ -119,8 +125,7 @@ class ServerCache
      *
      * @param array cmd
      * @callback
-     */
-    
+     */    
     Set(cmd, call){
         if (cmd.lenght < 3){
             call('Error');
@@ -137,8 +142,7 @@ class ServerCache
      *
      * @param array cmd
      * @callback
-     */
-    
+     */    
     Get(cmd, call){
         if (cmd.lenght < 2){
             call('Error');
@@ -161,8 +165,7 @@ class ServerCache
      * Command Show
      *
      * @callback
-     */
-    
+     */    
     Show(call){
         let str = "";
         for (let db in this.DB){
@@ -174,6 +177,42 @@ class ServerCache
         l=l+l.toString().length+1;
         
         call(l + " " +str);
+    }
+    
+    /**
+     * Command Die
+     *
+     * @callback
+     */
+    Die(cmd,call){
+        if (cmd.lenght < 3){
+            call('Error');
+        } else {
+            setTimeout(()=>{
+                delete this.DB[cmd[2]];
+            }, cmd[3]);
+            console.log('Die',cmd[2], cmd[3]);
+            call("OK");
+        }
+    }
+    
+    /**
+     * Command Del
+     *
+     * @callback
+     */
+    Del(cmd,call){
+        if (cmd.lenght < 2){
+            call('Error');
+        }
+        
+        if (this.DB[cmd[2]] === undefined){
+            call("undefined");
+        } else {
+            console.log('Del',cmd[2]);
+            delete this.DB[cmd[2]];
+            call("OK!");
+        }
     }
 }
 
