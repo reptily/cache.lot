@@ -8,9 +8,10 @@ class ServerCache
     * @param host
     * @param port
     */    
-    constructor(host, port) {
+    constructor(host, port, debug) {
         this.host = host;
         this.port = port;
+        this.debug = debug;
         
         this.DB = {};        
         
@@ -44,6 +45,11 @@ class ServerCache
             socket.on('data', data => {
                 let bread = socket.bytesRead;
                 let bwrite = socket.bytesWritten;
+                
+                if(this.debug){
+                    console.log("Buffer", data);
+                    console.log("String", data+"");
+                }
                 
                 body += data;
                 
@@ -91,6 +97,10 @@ class ServerCache
     **/
     
     Command(data, call){
+        if(this.debug){
+            console.log("Command parse", data);
+        }
+        
         let val = data.match(/^\d*\s+([a-z]{1,})\s*([a-z]{1,})*\s*[=]*\s*(.*)/) || [];
         
         if (val.length > 0){
@@ -127,6 +137,10 @@ class ServerCache
      * @callback
      */    
     Set(cmd, call){
+        if(this.debug){
+            console.log("set command", cmd);
+        }
+        
         if (cmd.lenght < 3){
             call('Error');
         } else {
@@ -144,6 +158,10 @@ class ServerCache
      * @callback
      */    
     Get(cmd, call){
+        if(this.debug){
+            console.log("get command", cmd);
+        }
+        
         if (cmd.lenght < 2){
             call('Error');
         }
@@ -167,6 +185,10 @@ class ServerCache
      * @callback
      */    
     Show(call){
+        if(this.debug){
+            console.log("show command");
+        }
+        
         let str = "";
         for (let db in this.DB){
             str += db+",";
@@ -185,6 +207,10 @@ class ServerCache
      * @callback
      */
     Die(cmd,call){
+        if(this.debug){
+            console.log("die command", cmd);
+        }
+        
         if (cmd.lenght < 3){
             call('Error');
         } else {
@@ -202,6 +228,10 @@ class ServerCache
      * @callback
      */
     Del(cmd,call){
+        if(this.debug){
+            console.log("del command", cmd);
+        }
+        
         if (cmd.lenght < 2){
             call('Error');
         }
@@ -211,7 +241,7 @@ class ServerCache
         } else {
             console.log('Del',cmd[2]);
             delete this.DB[cmd[2]];
-            call("OK!");
+            call("OK");
         }
     }
 }

@@ -5,6 +5,7 @@ const Server = require("./src/server.js");
 
 let HOST = "127.0.0.1";
 let PORT = "3000";
+let DEBUG = false;
 
 /**
 * Print help information
@@ -21,6 +22,14 @@ if (process.argv[2] == "-h" || process.argv[2] == "--help"){
 
 if (process.argv[2] == "-v" || process.argv[2] == "--version"){
     console.log("Cache.log ver.: 1.0");
+}
+
+/**
+ * Set debug mode
+ */
+
+if (process.argv[2] == "--debug"){
+    DEBUG=true;
 }
 
 if (process.argv[2] != undefined){
@@ -47,4 +56,4 @@ if (process.argv[2] != undefined){
 /*
 * Start Server!!!
 */
-new Server(HOST, PORT);
+new Server(HOST, PORT, DEBUG);
