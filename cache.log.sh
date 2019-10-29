@@ -21,7 +21,7 @@ if (process.argv[2] == "-h" || process.argv[2] == "--help"){
 */
 
 if (process.argv[2] == "-v" || process.argv[2] == "--version"){
-    console.log("Cache.log ver.: 1.0");
+    console.log("Cache.log ver.: 1.1");
 }
 
 /**
